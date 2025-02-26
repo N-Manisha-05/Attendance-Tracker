@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %} Faculty Profile{% endblock %}
+{% block content %}
+
+{% block styles %}
+<style>
+    .dashboard-container {
+        margin: 20px;
+        font-family: Arial, sans-serif;
+        background-color: aliceblue;
+        margin-top: -30px;
+        padding: 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #f4f4f4;
+    }
+
+    .attendance-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .attendance-btn[data-status="Present"] {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .attendance-btn[data-status="Absent"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .home-button-container {
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .home-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .home-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .date-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .date-label {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .date-input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .btn{
+        margin-right: 0;
+        background-color: aqua;
+        width: 8%;
+        height: 20px;
+        border-radius: 6px;
+    }
+    a{
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+<body>
+<div class="dashboard-container">
+    <div class="header">
+        <h1>Welcome, {{ faculty_details.firstname }} {{ faculty_details.lastname }}</h1>
+        <button style="margin-right: 0px;" class="btn"> <a href="{% url 'faculty_profile' %}">See Profile</a></button>
+    </div>
+
+    <!-- Date Picker Section -->
+    <div class="date-container">
+        <label for="attendance-date" class="date-label">Select Date for Attendance:</label>
+        <input type="date" id="attendance-date" class="date-input" value="{{ today_date }}" max="{{ today_date }}">
+    </div>
+
+    <h2>Student List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Full Name</th>
+                <th>Attendance Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.firstname }} {{ student.lastname }}</td>
+                <td id="status-{{ student.student_id }}">{{ student.attendance_status|default:"Not Marked" }}</td>
+                <td>
+                    <button class="attendance-btn" data-student-id="{{ student.student_id }}" data-status="Present">Present</button>
+                    <button class="attendance-btn" data-student-id="{{ student.student_id }}" data-status="Absent">Absent</button>
+                </td>
+            </tr>
+            <tr></tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No students found.</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        
+    </table>
+
+    <div class="home-button-container">
+        <a href="{% url 'home' %}" class="home-btn">Go to Home</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.attendance-btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const studentId = this.dataset.studentId;
+            const status = this.dataset.status;
+            const subjectName = "{{ faculty_details.subject }}";
+            const attendanceDate = document.getElementById('attendance-date').value;
+
+            if (!attendanceDate) {
+                alert('Please select a date to mark attendance.');
+                return;
+            }
+
+            fetch('/mark_attendance/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    'student_id': studentId,
+                    'status': status,
+                    'subject_name': subjectName,
+                    'attendance_date': attendanceDate
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`status-${studentId}`).textContent = data.status;
+                } else {
+                    alert(`Error: ${data.error}`);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
+</body>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Delete Admin{% endblock %}
+{% block content %}
+<head>
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 75vh;
+            background-color: #f4f4f9;
+        }
+
+        .form-wrapper {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fa5151;
+            font-weight: bolder;
+            margin-bottom: 15px;
+        }
+
+        .btn-danger {
+            background-color: #FF6347;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #e05247;
+        }
+        .back-button {
+            background-color:#968f8f;
+            color: white;
+            font-size: 1rem; /* Reduced font size */
+            font-weight: bold;
+            padding: 5px;
+            margin:10px; /* Reduced padding */
+            border: none;
+            border-radius: 6px; /* Reduced border radius */
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+      
+
+        .back-button:hover {
+            background-color: #e05247;
+        }
+
+        .back-button:active {
+            background-color: #e05247;
+        }
+    </style>
+</head>
+<div class="form-container">
+    <div class="form-wrapper">
+        <h2>Delete an Admin</h2><br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}<br>
+            <button type="submit" class="btn-danger">Delete Admin</button><br><br>
+        </form>
+       <center> <a href="{% url 'administration_dashboard' %}" class="back-button">Back</a> </center>
+    </div>
+</div>
+{% endblock %}

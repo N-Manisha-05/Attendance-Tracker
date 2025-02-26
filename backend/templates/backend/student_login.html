@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Login{% endblock %}
+
+{% block content %}
+{% load static %} 
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    
+.image{
+    background-image: url("{% static 'images/3.jpg' %}");
+    min-height: 100vh; /* Stretches the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-repeat: none;
+    flex-direction: column;
+    width: 1310px;
+    margin-left: -20px;
+    height: 100vh;
+    margin: 0;
+    padding: 80px;
+    left: -20px;
+    right: 0;
+
+}
+.login-container {
+    background-color: #a4f1f1;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px 
+}
+.login{
+    display: flex;
+    flex-direction: column;
+    padding: 90px;
+    margin-top: -20px;
+    margin-left: 0;
+    
+}
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.input-group input {
+    width: 345px;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+
+}
+
+input:focus {
+    border-color: #007bff;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.button1 {
+    width: 100%;
+    padding: 10px;
+    background-color: #edf05f;
+    color: #1a1919;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: -70px;
+}
+button:hover {
+    background-color: #0056b3;
+}
+
+.signup-link {
+    margin-top: 15px;
+    color: #333;
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+.home-btn{
+    width: 100%;
+    background-color: #405266;
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Remove underline for the link */
+    display: inline-block; /* Ensures proper button layout */
+}
+
+</style>
+<div class="image login">
+ <div class="login-container ">
+      <div>  <h2>Student Login</h2> </div>
+        <div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="student_id" placeholder="Student Id" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button  class="button" type="submit">Login</button>
+        </form></div>
+        
+    </div>
+    <div> <center> <a href="{% url 'home' %}" class="button1">Back to Home</a></center> </div>
+</div>
+ {% endblock %} 

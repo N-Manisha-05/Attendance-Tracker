@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7eddf;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1b1a1a;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            height: 60vh;
+        }
+
+        .dashboard-button {
+            display: inline-block;
+            padding: 10px;
+            background-color: #58c05d;
+            color: rgb(252, 251, 251);
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            min-width: 150px;
+            height: 60px;
+            margin-top: 10px;
+        }
+
+        .dashboard-button:hover {
+            background-color: #45a049;
+          
+
+        }
+    </style>
+</head>
+
+<div class="dashboard-container">
+    <h1>Welcome, Admin</h1>
+    <p>Here are your admin dashboard options:</p>
+    <div class="button-container">
+        <a href="{% url 'add_student' %}" class="dashboard-button">Add Student</a>
+        <a href="{% url 'add_faculty' %}" class="dashboard-button">Add Faculty</a>
+        <a href="{% url 'view_student' %}" class="dashboard-button">View Students</a>
+        <a href="{% url 'view_faculty' %}" class="dashboard-button">View Faculty</a>
+        <a href="{% url 'add_admin' %}" class="dashboard-button">Add Admin</a>
+        <a href="{% url 'delete_admin' %}" class="dashboard-button">Delete Admin</a>
+        <a href="{% url 'low_attendance_students' %}" class="dashboard-button">Low Attendance</a>
+        <a href="{% url 'administration_logout' %}" class="dashboard-button">Logout</a>
+    </div>
+    
+</div>
+{% endblock %}

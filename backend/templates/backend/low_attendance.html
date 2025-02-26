@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Low Attendance Students{% endblock %}
+
+{% block styles %}
+<style>
+    .low-attendance-container {
+        margin: 20px;
+        font-family: Arial, sans-serif;
+        border-width: 10px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        /* padding: 20px; */
+        text-align: center;
+        /* border-bottom: 1px solid #ddd; */
+    }
+
+    table th {
+        background-color: #f4f4f4;
+    }
+    .message {
+        margin-top: 20px;
+        color: green;
+    }
+
+    .message.error {
+        color: red;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .pagination a {
+        margin-right: 0px;
+        /* padding: 8px 16px; */
+        margin-left: 50px;
+        text-decoration: none;
+        color: #007bff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .back-button {
+            background-color:#968f8f;
+            color: white;
+            font-size: 1rem; /* Reduced font size */
+            font-weight: bold;
+            padding: 5px;
+            margin:10px; /* Reduced padding */
+            border: none;
+            border-radius: 6px; /* Reduced border radius */
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+    .pagination a:hover {
+        background-color: #f4f4f4;
+    }
+    .send{
+        background-color: red;
+        color: red;
+    }
+    a{
+        margin-right: 0px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="border-width: 5px;">
+    <center>
+<div class="low-attendance-container" style="border-width: 10px;">
+    <h1>Students with Low Attendance (Below 75%)</h1>
+
+    {% if message %}
+        <div class="message {% if message|lower == 'no students with low attendance at the moment.' %}error{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if students %}
+        <form method="POST">
+            {% csrf_token %}
+            <table border="1px" cellpadding="100px" cellspacing="0px" >
+                <thead >
+                    <tr >
+                        <th>Select</th>&nbsp;&nbsp;
+                        <th>Student ID</th>&nbsp;&nbsp;
+                        <th>Name</th>&nbsp;&nbsp;
+                        <th>Student Email</th>&nbsp;&nbsp;
+                        <th>Attendance Percentage</th>&nbsp;&nbsp;
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td><input type="checkbox" name="students" value="{{ student.student.student_id }}"></td>
+                        <td>{{ student.student.student_id }}</td>&nbsp;&nbsp;&nbsp;
+                        <td>{{ student.student.firstname }} {{ student.student.lastname }}</td>&nbsp;&nbsp;&nbsp;
+                        <td>{{ student.student.email }}</td>&nbsp;&nbsp;&nbsp;
+                        <td>{{ student.attendance_percentage }}</td>&nbsp;&nbsp;&nbsp;
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <button type="submit" class="send" style="background-color:red; width: 200px; height: 40px; border-radius: 10px;">Send Alert Email</button><br>
+        </form>
+    {% else %}
+        <p>No students to display.</p>
+    {% endif %}
+
+    <!-- Pagination -->
+    <div class="pagination" style="margin-right: 0px;">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+        </div>
+        <br>
+        <center> <button class="back-button" style="background-color:#968f8f;
+            color: white;
+            font-size: 1rem; /* Reduced font size */
+            font-weight: bold;
+            padding: 5px;
+            
+            
+            border-radius: 6px; /* Reduced border radius */
+            cursor: pointer;
+           
+            transition: background-color 0.3s ease;
+            width: 10%;"><a href="{% url 'administration_dashboard' %}" style="text-decoration: none;" >Back</a></button> </center>
+    </div>
+</div>
+</center>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Check if the response is successful and display a message
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status) {
+                    // Display success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'message';
+                    successMessage.style.color = 'green';
+                    successMessage.textContent = data.status;
+                    form.insertAdjacentElement('beforebegin', successMessage);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending email:', error);
+            });
+        });
+    });
+    alert("{{ success_message }}");
+    window.onload = function() {
+            
+                alert("{{ success_message }}");
+         
+        }
+</script>
+{% endblock %}

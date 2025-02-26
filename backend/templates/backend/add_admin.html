@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Admin{% endblock %}
+
+{% block content %}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles for Form Container */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .form-wrapper {
+            background-color: #fff;
+            padding: 20px 30px; /* Reduced padding */
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;  /* Reduced max-width */
+            flex-direction: row;
+        }
+
+        .form-title {
+            font-size: 1.5rem; /* Reduced font size */
+            text-align: center;
+            margin-bottom: 15px; /* Reduced margin */
+            color: #4CAF50;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .form-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Reduced gap */
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input-group label {
+            font-size: 0.9rem; /* Reduced font size */
+            color: #333;
+            margin-right: 10px; /* Reduced margin */
+            width: 100px;  /* Reduced label width */
+        }
+
+        .input-field {
+            padding: 8px; /* Reduced padding */
+            font-size: 0.9rem; /* Reduced font size */
+            border: 1px solid #ccc;
+            border-radius: 6px; /* Reduced border radius */
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .input-field:focus {
+            border-color: #4CAF50;
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+        }
+
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem; /* Reduced font size */
+            font-weight: bold;
+            padding: 7px; /* Reduced padding */
+            border: none;
+            border-radius: 6px; /* Reduced border radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+      
+        .back-button{
+            background-color: #595a59;
+            color: white;
+            font-size: 1rem; /* Reduced font size */
+            font-weight: bold;
+            padding: 7px; /* Reduced padding */
+            border: none;
+            border-radius: 6px; /* Reduced border radius */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-decoration: none;
+        }
+        .submit-button:hover,.back-button:hover {
+            background-color: #45a049;
+        }
+
+        .submit-button:active, .back-button:active {
+            background-color: #3c8c3a;
+        }
+
+        /* Optional: for error/success messages */
+        .messages {
+            margin-bottom: 15px; /* Reduced margin */
+            text-align: center;
+        }
+
+        .messages.success {
+            color: green;
+        }
+
+        .messages.error {
+            color: red;
+        }
+             
+        
+    </style>
+</head>
+
+<div class="form-container">
+    <div class="form-wrapper">
+        <h2 class="form-title">Add New Admin</h2>
+        <form method="POST" class="form-content">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="admin_id">Admin ID:</label>
+                <input type="text" id="admin_id" name="admin_id" required placeholder="Enter Admin ID" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" required placeholder="Enter First Name" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" required placeholder="Enter Last Name" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required placeholder="msameera" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter Email" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="•••••••••" class="input-field">
+            </div>
+
+            <div class="input-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number" class="input-field">
+            </div>
+
+            <button type="submit" class="submit-button">Add Admin</button>
+            <br><br>
+        <center><a href="{% url 'administration_dashboard' %}" class="back-button">Back</a></center>
+        </form>
+    </div>
+</div>
+{% endblock %}

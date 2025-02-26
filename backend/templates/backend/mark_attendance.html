@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Mark Attendance</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="student">Student:</label>
+    <select name="student_id" id="student">
+        {% for student in students %}
+        <option value="{{ student.student_id }}">{{ student.firstname }} {{ student.lastname }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="subject">Subject:</label>
+    <input type="text" name="subject_name" id="subject" required><br><br>
+
+    <label for="date">Date:</label>
+    <input type="date" name="attendance_date" id="date" required><br><br>
+
+    <label for="status">Status:</label>
+    <input type="radio" id="present" name="status" value="present" checked>
+    <label for="present">Present</label>
+    <input type="radio" id="absent" name="status" value="absent">
+    <label for="absent">Absent</label><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

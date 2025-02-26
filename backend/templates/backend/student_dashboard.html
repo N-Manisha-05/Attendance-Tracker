@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+{% load static %}
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          
+        }
+
+/* Dashboard Container */
+.dashboard-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    background: #e9bcfd;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-color: #131111;
+    margin-top: -10px;
+}
+
+/* Dashboard Title */
+h1 {
+    font-size: 28px;
+    color: #1845db;
+    margin-bottom: 20px;
+}
+
+/* Student Info Section */
+.student-info {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.student-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.student-info p strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Update Profile Button */
+.update-profile-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #30c422;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.update-profile-btn:hover {
+    background-color: #09f780;
+}
+button{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333633;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+a{
+    text-decoration: none;
+    color: #f4f4f4;
+}
+
+    </style>
+
+
+    <div class="dashboard-container">
+    <h1>Welcome {{ student.firstname }} {{ student.lastname }}</h1>
+    <div class="student-info">
+    <p><strong><pre>ID                    : </strong>{{ student.student_id }}</pre></p>
+    <p><strong><pre>FIRST NAME            : </strong>{{ student.firstname }}</pre></p>
+    <p><strong><pre>LAST NAME             : </strong>{{ student.lastname}}</pre></p>
+    <p><strong><pre>EMAIL                 : </strong>{{ student.email }}</pre></p>
+    <p><strong><pre>ATTENDANCE PERCENTAGE : </strong>{{ student.attendance_percentage }}</pre></p>
+    <p><strong><pre>PHONE NUMBER          : </strong>{{ student.phone_number }}</pre></p></div><center>
+    <a href="{% url 'update_profile' %}" class="update-profile-btn">Update Profile</a></center>
+
+    </div>
+   <center><button> <a href="{% url 'student_login' %}" class="home-btn">Back to Login</a></button></center>
+
+   {% endblock %}

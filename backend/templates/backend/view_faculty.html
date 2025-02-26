@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Faculty List{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        .table-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btm{
+            width: 100px;
+            background-color: rgb(95, 230, 235);
+            border-radius: 10px;
+            height: 30px;
+            }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #388E3C;
+            text-decoration: underline;
+        }
+        .back-button{
+            text-decoration: none;
+            color: brown;
+        }
+        .view{
+            color: blueviolet;
+        }
+    </style>
+</head>
+
+<div class="table-container">
+    <h2>Faculty List</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        {% for faculty in faculty_members %}
+        <tr>
+            <td>{{ faculty.faculty_id }}</td>
+            <td>{{ faculty.firstname }} {{ faculty.lastname }}</td>
+            <td>
+                <a href="{% url 'faculty_detail' faculty.faculty_id %} " class="view">View Details</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table><br>
+    <center><button class="btm"><a href="{% url 'administration_dashboard' %}" class="back-button">Back</a></button></center>
+</div>
+{% endblock %}

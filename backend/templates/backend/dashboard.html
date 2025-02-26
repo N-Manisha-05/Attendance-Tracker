@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome, {{ student.user.username }}</h2>
+        <p>Student ID: {{ student.student_id }}</p>
+        <p>Department: {{ student.department }}</p>
+        <p>Phone: {{ student.phone_number }}</p>
+        <p><a href="{% url 'student_profile_update' %}">Update Profile</a></p>
+    </div>
+</body>
+</html>

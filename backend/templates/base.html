@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    {% load static %} 
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin:0;
+        }
+
+        header.header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #6182a8;;
+            color: #fff;
+            z-index: 10;  /* Ensure it's not hidden behind other elements */
+            position: sticky;
+            top: 0;
+            width: 100%;
+        }
+
+        header.header .welcome-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header.header .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        main {
+            padding: 20px 40px;
+            flex: 1;
+        }
+        .welcome-title{
+            color: white;
+            margin-top: 10px;
+        }
+        footer.footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #6182a8;
+            color: #fff;
+            width: 100%;
+            bottom: 0;
+            margin-bottom: 0px;
+            position: fixed;
+            left: 0;
+        }
+
+        footer.footer p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="welcome-title">Welcome</h1>
+        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="logo">
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>© 2024 Attendance Tracker. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
